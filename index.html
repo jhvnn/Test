@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Romantic Template</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  background:#000;
+  font-family:'Poppins',sans-serif;
+  overflow-x:hidden;
+  color:white;
+}
+
+/* WHITE SPLASH SCREEN */
+#splash{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:white;
+  z-index:9999;
+  animation:fadeSplash 1s forwards;
+  animation-delay:0.5s;
+}
+
+@keyframes fadeSplash{
+  to{opacity:0;visibility:hidden;}
+}
+
+/* PAINT SPLASH */
+.paint{
+  position:fixed;
+  width:200%;
+  height:200%;
+  background:radial-gradient(circle,#ff2e63,#8e2de2,#000);
+  clip-path:circle(0% at 50% 50%);
+  animation:paintReveal 1.2s ease forwards;
+  animation-delay:0.6s;
+  z-index:1;
+}
+
+@keyframes paintReveal{
+  to{clip-path:circle(75% at 50% 50%);}
+}
+
+/* INTRO SECTION */
+#intro{
+  position:relative;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
+
+.pikachu{
+  position:absolute;
+  bottom:50px;
+  left:-200px;
+  width:150px;
+  transition:all 1.2s cubic-bezier(.68,-0.55,.27,1.55);
+}
+
+.pikachu.enter{
+  left:40%;
+}
+
+.pikachu.exit{
+  left:120%;
+}
+
+/* BUTTON DROP */
+.main-btn{
+  position:absolute;
+  top:-200px;
+  padding:15px 40px;
+  border-radius:50px;
+  border:none;
+  font-size:18px;
+  background:#ff2e63;
+  color:white;
+  opacity:0;
+  pointer-events:none;
+  transition:all 0.6s ease;
+}
+
+.main-btn.drop{
+  top:50%;
+  transform:translateY(-50%);
+  opacity:1;
+  pointer-events:auto;
+  animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+  0%{box-shadow:0 0 0px #ff2e63;}
+  50%{box-shadow:0 0 30px #ff2e63;}
+  100%{box-shadow:0 0 0px #ff2e63;}
+}
+
+/* MEMORY TITLE */
+.memory-title{
+  text-align:center;
+  font-family:'Playfair Display',serif;
+  font-size:2.5rem;
+  margin-top:120px;
+  opacity:0;
+  transform:translateY(40px);
+  transition:1s ease;
+  animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+  from{text-shadow:0 0 10px #ff2e63;}
+  to{text-shadow:0 0 25px #ff79a8;}
+}
+
+.scroll-text{
+  text-align:center;
+  opacity:0;
+  margin-top:20px;
+  font-size:14px;
+  letter-spacing:3px;
+}
+
+/* MEMORY SECTION */
+.memory-section{
+  background:linear-gradient(180deg,#000,#1a001a);
+  padding:60px 20px;
+}
+
+.memory{
+  max-width:800px;
+  margin:60px auto;
+  opacity:0;
+  transform:translateY(40px);
+  transition:0.8s ease;
+}
+
+.memory img{
+  width:100%;
+  border-radius:20px;
+  filter:brightness(0.85);
+  transition:0.6s ease;
+}
+
+.memory img:hover{
+  transform:scale(1.03);
+  filter:brightness(1);
+}
+
+.memory p{
+  text-align:center;
+  margin-top:10px;
+  color:#ddd;
+}
+
+/* EMOJI BACKGROUND */
+.emoji-bg{
+  position:fixed;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  z-index:0;
+}
+
+.emoji{
+  position:absolute;
+  font-size:20px;
+  animation:fall linear infinite;
+  opacity:0.4;
+}
+
+@keyframes fall{
+  0%{transform:translateY(-10vh);}
+  100%{transform:translateY(110vh);}
+}
+</style>
+</head>
+
+<body>
+
+<div id="splash"></div>
+<div class="paint"></div>
+<div class="emoji-bg"></div>
+
+<section id="intro">
+  <img src="pikachu.png" class="pikachu" id="pikachu">
+  <button class="main-btn" id="startBtn">Click Me</button>
+</section>
+
+<h2 class="memory-title" id="memoryTitle">Through The Memories</h2>
+<div class="scroll-text" id="scrollText">SCROLL DOWN</div>
+
+<section class="memory-section">
+  <!-- SAME PHOTO 10 TIMES -->
+  <div class="memory"><img src="photo.jpg"><p>Caption 1</p></div>
+  <div class="memory"><img src="photo.jpg"><p>Caption 2</p></div>
+  <div class="memory"><img src="photo.jpg"><p>Caption 3</p></div>
+  <div class="memory"><img src="photo.jpg"><p>Caption 4</p></div>
+  <div class="memory"><img src="photo.jpg"><p>Caption 5</p></div>
+  <div class="memory"><img src="photo.jpg"><p>Caption 6</p></div>
+  <div class="memory"><img src="photo.jpg"><p>Caption 7</p></div>
+  <div class="memory"><img src="photo.jpg"><p>Caption 8</p></div>
+  <div class="memory"><img src="photo.jpg"><p>Caption 9</p></div>
+  <div class="memory"><img src="photo.jpg"><p>Caption 10</p></div>
+</section>
+
+<audio id="music" src="music.mp3"></audio>
+
+<script>
+const pika=document.getElementById("pikachu");
+const btn=document.getElementById("startBtn");
+
+setTimeout(()=>{
+  pika.classList.add("enter");
+  btn.classList.add("drop");
+},1200);
+
+btn.addEventListener("click",()=>{
+  btn.style.opacity="0";
+  btn.style.pointerEvents="none";
+  document.getElementById("music").play();
+  pika.classList.add("exit");
+
+  setTimeout(()=>{
+    document.getElementById("memoryTitle").style.opacity="1";
+    document.getElementById("memoryTitle").style.transform="translateY(0)";
+  },1000);
+
+  setTimeout(()=>{
+    document.getElementById("scrollText").style.opacity="1";
+  },1800);
+});
+
+/* Scroll Reveal */
+const memories=document.querySelectorAll(".memory");
+window.addEventListener("scroll",()=>{
+  memories.forEach(mem=>{
+    if(mem.getBoundingClientRect().top<window.innerHeight-100){
+      mem.style.opacity="1";
+      mem.style.transform="translateY(0)";
+    }
+  });
+});
+
+/* Emoji Generator */
+const emojiContainer=document.querySelector('.emoji-bg');
+const emojis=["❤️","💖","💘","💕","💞"];
+for(let i=0;i<25;i++){
+  const span=document.createElement("span");
+  span.classList.add("emoji");
+  span.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+  span.style.left=Math.random()*100+"vw";
+  span.style.animationDuration=(5+Math.random()*5)+"s";
+  emojiContainer.appendChild(span);
+}
+</script>
+
+</body>
+  </html>
